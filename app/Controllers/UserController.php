@@ -8,10 +8,12 @@ use App\Models\UserModel;
 
 class UserController extends BaseController
 {
+    public function __construct() {
+        helper('render');
+        $this->user = new UserModel();
+    }
     public function index()
     {
-        helper('render');
-        
         return render('users/index');
     }
 
@@ -31,6 +33,12 @@ class UserController extends BaseController
 
         $user->save($data);
         $data = ['status'=>'User Saved Successfully'];
+
+        return $this->response->json_encode($data);
+    }
+
+    public function fetch() {
+        $data['user'] = $this->user->findAll();
 
         return $this->response->setJSON($data);
     }

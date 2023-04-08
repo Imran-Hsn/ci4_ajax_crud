@@ -48,6 +48,19 @@
         </div>
     </div>
     <div class="card-body">
+        <table class="table table-bordered">
+            <tr>
+                <thead>
+                    <th>ID</th>
+                    <th>Name</th>
+                    <th>E-mail</th>
+                    <th>Phone</th>
+                </thead>
+            </tr>
+        <tbody class="user_data">
+            
+        </tbody>
+        </table>
         
     </div>
     </div>
@@ -126,6 +139,35 @@
                 });
             }
         });
+
+        // Call fetchUserData function
+        fetchUserData();
+        // Fetch data from database
+        function fetchUserData() {
+            $.ajax({
+                type: "GET",
+                url: "<?php echo base_url('user/get-data') ?>",
+                success: function (response) {
+                    // console.log(response.user);
+                    $.each(response.user, function(index, value) {
+                        $('.user_data').append(
+                            '<tr>\
+                                <td>'+ value['id'] + '</td>\
+                                <td>'+ value['name'] + '</td>\
+                                <td>'+ value['email'] + '</td>\
+                                <td>'+ value['phone'] + '</td>\
+                                <td>\
+                                    <a href="" class="badge btn-info"> View</a> \
+                                    <a href="" class="badge btn-primary"> Edit</a> \
+                                    <a href="" class="badge btn-danger"> Delete</a> \
+                                <td>\
+                                </tr>'
+                        );
+                    });
+                }
+            });
+        }
+        
     }); 
     
 </script>
